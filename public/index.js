@@ -1,20 +1,3 @@
-function getColor(stock){
-    if(stock === "GME"){
-        return 'rgba(61, 161, 61, 0.7)'
-    }
-    if(stock === "MSFT"){
-        return 'rgba(209, 4, 25, 0.7)'
-    }
-    if(stock === "DIS"){
-        return 'rgba(18, 4, 209, 0.7)'
-    }
-    if(stock === "BNTX"){
-        return 'rgba(166, 43, 158, 0.7)'
-    }
-}
-
-
-
 async function main() {
     const timeChartCanvas = document.querySelector('#time-chart');
     const highestPriceChartCanvas = document.querySelector('#highest-price-chart');
@@ -30,7 +13,6 @@ async function main() {
 
     stocks.forEach( stock => stock.values.reverse())
 
-    // Time Chart
     new Chart(timeChartCanvas.getContext('2d'), {
         type: 'line',
         data: {
@@ -39,12 +21,11 @@ async function main() {
                 label: stock.meta.symbol,
                 backgroundColor: getColor(stock.meta.symbol),
                 borderColor: getColor(stock.meta.symbol),
-                data: stock.values.map(value => parseFloat(value.high))
+                data: stock.values.reverse().map(value => parseFloat(value.high))
             }))
         }
     });
 
-    // High Chart
     new Chart(highestPriceChartCanvas.getContext('2d'), {
         type: 'bar',
         data: {
@@ -63,8 +44,7 @@ async function main() {
             }]
         }
     });
-
-    // Average Chart
+    
     new Chart(averagePriceChartCanvas.getContext('2d'), {
         type: 'pie',
         data: {
@@ -104,3 +84,19 @@ function calculateAverage(values) {
 }
 
 main()
+
+
+function getColor(stock){
+    if(stock === "GME"){
+        return 'rgba(255, 0, 255))'
+    }
+    if(stock === "MSFT"){
+        return 'rgba(0, 0, 255)'
+    }
+    if(stock === "DIS"){
+        return 'rgba(255, 165, 0)'
+    }
+    if(stock === "BNTX"){
+        return 'rgba(0, 255, 255)'
+    }
+}
